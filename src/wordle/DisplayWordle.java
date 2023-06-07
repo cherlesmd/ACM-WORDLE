@@ -4,8 +4,8 @@ public class DisplayWordle {
     WordleState state;
     Scanner input;
     public static final String RESET = "\u001B[0m";
-    public static final String BG_GREEN = "\u001B[42m";
-    public static final String BG_YELLOW = "\u001B[43m";
+    public static final String BG_GREEN = "\u001B[32m";
+    public static final String BG_YELLOW = "\u001B[33m";
 
     public DisplayWordle(WordleState state, Scanner input) {
         this.state = state;
