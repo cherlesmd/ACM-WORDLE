@@ -6,7 +6,7 @@ This repository contains files for the ACM Beginners' Workshop Project: A Wordle
 ## Tentative Feature List
  1. Basic wordle functionality: 6 tries to guess a word, highlight incorrect, included, or correct letters as gray, yellow, or green.
  2. Maybe a menu that does the following:
-    - Change word length from 4 to 8.
+    - Reset the current board!
     - Show or clear stats.
 
 ## Tools
@@ -14,4 +14,4 @@ This repository contains files for the ACM Beginners' Workshop Project: A Wordle
     - Build (Derek T.): `zsh build.sh`
 
 ## Notes:
- 1. Derek T.'s files: `.vscode`.
+ 1. Derek T.'s folders and files: `.vscode` and `run.sh`.
