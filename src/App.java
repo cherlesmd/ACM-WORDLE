@@ -4,40 +4,103 @@
  * @version 0.0.1
  */
 
-import javax.swing.JFrame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
 class App extends JFrame implements ActionListener {
     public static final String APP_NAME = "Wordle";
-    public static final int WINDOW_WIDTH = 480;
-    public static final int WINDOW_HEIGHT = 480;
 
-    // TODO: add game classes for the board, GUI listeners, etc.
+    public static final int GAME_TRIES = 6;
+    public static final int GAME_LETTER_COUNT = 5;
 
-    public App(String windowTitle, int windowWidth, int windowHeight) {
+    // TODO: add game classes for the board data, board logic, GUI objects, statistics class, and a game data loader / saver.
+
+    private JMenuItem appExitItem;
+    private JMenuItem statsShowItem;
+    private JMenuItem statsClearItem;
+    private JMenu appMenu;
+    private JMenu statsMenu;
+    private JMenuBar menubarComponent;
+
+    private LetterTile[] tiles;
+
+    public App() {
         super();
 
-        // TODO: initialize GUI and set listeners.
+        appExitItem = new JMenuItem("Exit");
+        statsShowItem = new JMenu("Show");
+        statsClearItem = new JMenu("Clear");
 
+        appMenu = new JMenu("App");
+        statsMenu = new JMenu("Stats");
+
+        menubarComponent = new JMenuBar();
+
+        tiles = new LetterTile[GAME_TRIES * GAME_LETTER_COUNT];
+
+        for (int i = 0; i < tiles.length; i++) {
+            tiles[i] = new LetterTile();
+        }
+    }
+
+    public void setupWindow(String windowTitle) {
+        // Put menu controls with listeners set:
+        appExitItem.addActionListener((e) -> {
+            onExit();
+        });
+        statsShowItem.addActionListener((e) -> {
+            // do nothing for now: implement later.
+        });
+        statsClearItem.addActionListener((e) -> {
+            // do nothing for now: implement later.
+        });
+
+        appMenu.add(appExitItem);
+        statsMenu.add(statsShowItem);
+        statsMenu.add(statsClearItem);
+
+        menubarComponent.add(appMenu);
+        menubarComponent.add(statsMenu);
+
+        // Put board display:
+        setJMenuBar(menubarComponent);
+        setLayout(new GridLayout(GAME_TRIES, GAME_LETTER_COUNT));
+        
+        for (int i = 0; i < tiles.length; i++) {
+            add(tiles[i]);
+        }
+        
         setTitle(windowTitle);
-        setSize(windowWidth, windowHeight);
-        setResizable(false);
-        setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // On close, this app should save game settings said in the README.
+        setSize(LetterTile.TILE_SIDE_LEN * GAME_LETTER_COUNT, LetterTile.TILE_SIDE_LEN * GAME_TRIES);
+        setResizable(false);
         setVisible(true);
+        repaint();
+    }
+
+    private void onExit() {
+        // TODO: add game statistics saves.
+        System.out.println("Exiting " + APP_NAME);
+        System.exit(0);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Object target = e.getSource();
+        // Object target = e.getSource(); // event targeted component to check
 
-        // TODO: implement checks for which controls are clicked or keypresses... keep track of whether the keypresses can be captured based on if the board is focused (clicked directly or not).
+        // TODO: implement checks for which controls are clicked or keypresses... keep track of whether the keypresses can be handled based on if the board is focused (clicked directly or not).
 
         System.out.println("Actions not implemented!");
     }
 
     public static void main(String[] args) {
-        App wordleGame = new App(APP_NAME, WINDOW_WIDTH, WINDOW_HEIGHT);
+        App wordleGame = new App();
+        wordleGame.setupWindow(APP_NAME);
     }
 }
