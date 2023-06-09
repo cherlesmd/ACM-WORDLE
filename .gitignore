@@ -1,0 +1,4 @@
+# Ignore VSCode configs if present.
+# Ignore exclusive files by Derek.
+.vscode/
+run.sh
