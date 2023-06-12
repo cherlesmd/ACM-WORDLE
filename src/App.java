@@ -12,12 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 class App extends JFrame implements ActionListener {
     public static final String APP_NAME = "Wordle";
 
     public static final int GAME_TRIES = 6;
     public static final int GAME_LETTER_COUNT = 5;
+    public static final int TILE_GAP = 16;
 
     // TODO: add game classes for the board data, board logic, GUI objects, statistics class, and a game data loader / saver.
 
@@ -34,8 +36,8 @@ class App extends JFrame implements ActionListener {
         super();
 
         appExitItem = new JMenuItem("Exit");
-        statsShowItem = new JMenu("Show");
-        statsClearItem = new JMenu("Clear");
+        statsShowItem = new JMenuItem("Show");
+        statsClearItem = new JMenuItem("Clear");
 
         appMenu = new JMenu("App");
         statsMenu = new JMenu("Stats");
@@ -54,11 +56,15 @@ class App extends JFrame implements ActionListener {
         appExitItem.addActionListener((e) -> {
             onExit();
         });
+
         statsShowItem.addActionListener((e) -> {
             // do nothing for now: implement later.
+            displayStats();
         });
+
         statsClearItem.addActionListener((e) -> {
             // do nothing for now: implement later.
+            deleteStats();
         });
 
         appMenu.add(appExitItem);
@@ -70,7 +76,7 @@ class App extends JFrame implements ActionListener {
 
         // Put board display:
         setJMenuBar(menubarComponent);
-        setLayout(new GridLayout(GAME_TRIES, GAME_LETTER_COUNT));
+        setLayout(new GridLayout(GAME_TRIES, GAME_LETTER_COUNT, TILE_GAP, TILE_GAP));
         
         for (int i = 0; i < tiles.length; i++) {
             add(tiles[i]);
@@ -78,16 +84,34 @@ class App extends JFrame implements ActionListener {
         
         setTitle(windowTitle);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // On close, this app should save game settings said in the README.
-        setSize(LetterTile.TILE_SIDE_LEN * GAME_LETTER_COUNT, LetterTile.TILE_SIDE_LEN * GAME_TRIES);
+
+        int calcWidth = (LetterTile.TILE_SIDE_LEN * GAME_LETTER_COUNT) + TILE_GAP * (GAME_LETTER_COUNT - 1);
+        int calcHeight = (LetterTile.TILE_SIDE_LEN * GAME_TRIES) + TILE_GAP * (GAME_TRIES - 1);
+
+        setSize(calcWidth, calcHeight);
         setResizable(false);
         setVisible(true);
         repaint();
     }
 
     private void onExit() {
-        // TODO: add game statistics saves.
+        // TODO: add logic to save game statistics. Use plain Java Serializer API.
         System.out.println("Exiting " + APP_NAME);
         System.exit(0);
+    }
+
+    private void displayStats() {
+        // TODO: add logic to fetch stats data.
+        JOptionPane.showMessageDialog(this, "Stats: ??", APP_NAME, JOptionPane.INFORMATION_MESSAGE, null);
+    }
+
+    private void deleteStats() {
+        int clearOption = JOptionPane.showConfirmDialog(this, "This will clear your current stats. Are you sure?", APP_NAME, JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (clearOption == JOptionPane.YES_OPTION) {
+            // TODO: replace this print statement with logic to clear overall statistics.
+            System.out.println("Dummy action: implement later.");
+        }
     }
 
     @Override
