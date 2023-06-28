@@ -1,5 +1,3 @@
-package wordle;
-
 import java.util.Scanner;
 
 
