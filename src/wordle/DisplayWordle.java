@@ -18,7 +18,7 @@ public class DisplayWordle {
     public void print() {
         printGuesses();
         printBlanks();
-        clear();
+//        clear();
     }
 
     // Clears the terminal
@@ -45,7 +45,6 @@ public class DisplayWordle {
     }
 
     // Prints out previous guesses on the board with appropriate feedback
-    // Prints out characters of the guesses seperated by "|"
     public void printGuesses() {
 
         StringBuilder b = new StringBuilder();
@@ -83,7 +82,7 @@ public class DisplayWordle {
 //                b.append("|");
             }
 
-            b.setLength((b.length() - 1));
+//            b.setLength((b.length() - 1));
             System.out.println(b.toString());
             b = new StringBuilder();
 
@@ -100,7 +99,7 @@ public class DisplayWordle {
             for (int j = 0; j < state.getWord().length(); j++) {
                 b.append("_");
             }
-            b.setLength(b.length() - 1);
+//            b.setLength(b.length() - 1);
             System.out.println(b.toString());
             b = new StringBuilder();
         }
