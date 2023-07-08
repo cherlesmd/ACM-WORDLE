@@ -1,3 +1,5 @@
+package gui; // for VSCode package resolution
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
