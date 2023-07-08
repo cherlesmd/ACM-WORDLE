@@ -1,0 +1,8 @@
+# Git Settings
+# By: Derek Tan, ??, ??
+
+# Auto Fix line endings:
+text=auto
+
+# Handle binaries appropriately:
+*.class=binary
