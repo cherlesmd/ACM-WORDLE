@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 public class WordleGUI extends JFrame {
     private JTextField[][] textRows;
     private int currRow;
+    private State state;
 
     public WordleGUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,19 +40,29 @@ public class WordleGUI extends JFrame {
         // Attach the GUI to the window frame
         add(mainPanel);
         currRow = 0;
+        state = new State();
     }
 
     private void submitButtonClicked() {
+        int total = 0;
         for(int i = 0; i <= 4; i++) {
+            int correct = state.checkCharacter(textRows[currRow][i].getText(), i);
+            if(correct == 1) {
+                textRows[currRow][i].setBackground(Color.GREEN);
+                total += 1;
+            } else if (correct == 2) {
+                textRows[currRow][i].setBackground(Color.YELLOW);
+            }
             textRows[currRow][i].setEditable(false);
+            state.resetStack();
         }
-
-        if(currRow == 5) {
+        if(currRow == 5 || total == 5) {
             return;
         }
 
         textRows[currRow+1][0].requestFocus();
         currRow++;
+        System.out.println(total);
     }
 
     private void createInputField(JPanel panel) {
@@ -65,6 +76,10 @@ public class WordleGUI extends JFrame {
                 textRows[i][j] = inputField;
             }
         }
+    }
+
+    public void gameOver(boolean won) {
+//        disable all rows, register and save if win or loss, save stats
     }
 
     private class TileKeyListener implements KeyListener {
