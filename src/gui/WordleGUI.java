@@ -53,8 +53,15 @@ public class WordleGUI extends JFrame {
             textRows[currRow][i].setEditable(false);
             state.resetStack();
         }
-        if(currRow == 5 || total == 5) {
+        if(currRow == 5 && total != 5) {
+            state.gameOver(false);
             return;
+//            make pop up announcing loss
+        } else if (total == 5) {
+            state.gameOver(true);
+            return;
+            //            make pop up announcing loss
+
         }
         textRows[currRow+1][0].requestFocus();
         currRow++;
@@ -74,9 +81,6 @@ public class WordleGUI extends JFrame {
         }
     }
 
-    public void gameOver(boolean won) {
-//        disable all rows, register and save if win or loss, save stats
-    }
 
     private class TileKeyListener implements KeyListener {
         private int tileRow;
