@@ -9,6 +9,7 @@ public class WordleGUI extends JFrame {
     private JTextField[][] textRows;
     private int currRow;
     private State state;
+    private JPanel panel;
 
     public WordleGUI() {
         setTitle("Tiles GUI");
@@ -17,12 +18,12 @@ public class WordleGUI extends JFrame {
 
         // Create a panel to hold the components
         JPanel mainPanel = new JPanel(new BorderLayout());
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new GridLayout(6, 5));
         mainPanel.add(panel, BorderLayout.CENTER);
         // Create the input fields
         textRows = new JTextField[6][5];
-        createInputField(panel);
+        createInputField();
 
         // Create the submit button
         JButton submitButton = new JButton("Submit");
@@ -54,21 +55,22 @@ public class WordleGUI extends JFrame {
             state.resetStack();
         }
         if(currRow == 5 && total != 5) {
+            JOptionPane.showMessageDialog(this, "Better luck next time : (", "MESSAGE", JOptionPane.PLAIN_MESSAGE);
             state.gameOver(false);
+            resetGame();
             return;
-//            make pop up announcing loss
         } else if (total == 5) {
+            JOptionPane.showMessageDialog(this, "You Won : )", "MESSAGE", JOptionPane.PLAIN_MESSAGE);
             state.gameOver(true);
+            resetGame();
             return;
-            //            make pop up announcing loss
-
         }
         textRows[currRow+1][0].requestFocus();
         currRow++;
         System.out.println(total);
     }
 
-    private void createInputField(JPanel panel) {
+    private void createInputField() {
         for(int i = 0; i <= 5; i++) {
             for (int j = 0; j <= 4; j++) {
                 JTextField inputField = new JTextField();
@@ -77,6 +79,22 @@ public class WordleGUI extends JFrame {
                 inputField.addKeyListener(new TileKeyListener(i, j));
                 panel.add(inputField);
                 textRows[i][j] = inputField;
+            }
+        }
+    }
+
+    public void resetGame() {
+        resetInputFields();
+        currRow = 0;
+        state = new State();
+    }
+
+    private void resetInputFields() {
+        for(int i = 0; i <= 5; i++) {
+            for (int j = 0; j <= 4; j++) {
+                textRows[i][j].setEditable(true);
+                textRows[i][j].setText("");
+                textRows[i][j].setBackground(Color.WHITE);
             }
         }
     }

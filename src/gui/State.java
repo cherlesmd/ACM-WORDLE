@@ -11,16 +11,13 @@ public class State {
     public int checkCharacter(String c, int index) {
         char character = c.charAt(0);
         if(correct_word.charAt(index) == character) {
-            System.out.println(character + " green");
             char_stack[index] = true;
             return 1;
         }
         else if (contains(character) == true) {
-            System.out.println(character + " yellow");
             char_stack[index] = true;
             return 2;
         }
-        System.out.println(character + " grey");
         return 0;
     }
 
@@ -39,7 +36,7 @@ public class State {
     }
 
     public void gameOver(boolean won) {
-//        disable all rows, register and save if win or loss, save stats
+//        register and save if win or loss, save stats
         if(won == true) {
             System.out.println("won");
         } else {
