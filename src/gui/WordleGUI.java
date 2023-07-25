@@ -11,6 +11,7 @@ public class WordleGUI extends JFrame {
     private JTextField[][] textRows;
     private int currRow;
     private State state;
+    private JPanel panel;
 
     public WordleGUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -19,13 +20,13 @@ public class WordleGUI extends JFrame {
 
         // Create a panel for letter tiles
         JPanel mainPanel = new JPanel(new BorderLayout());
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new GridLayout(6, 5));
         mainPanel.add(panel, BorderLayout.CENTER);
 
         // Create the input fields for holding guess letters
         textRows = new JTextField[6][5];
-        createInputField(panel);
+        createInputField();
 
         // Create the submit button for guesses
         JButton submitButton = new JButton("Submit");
@@ -56,7 +57,15 @@ public class WordleGUI extends JFrame {
             textRows[currRow][i].setEditable(false);
             state.resetStack();
         }
-        if(currRow == 5 || total == 5) {
+        if(currRow == 5 && total != 5) {
+            JOptionPane.showMessageDialog(this, "Better luck next time : (", "MESSAGE", JOptionPane.PLAIN_MESSAGE);
+            state.gameOver(false);
+            resetGame();
+            return;
+        } else if (total == 5) {
+            JOptionPane.showMessageDialog(this, "You Won : )", "MESSAGE", JOptionPane.PLAIN_MESSAGE);
+            state.gameOver(true);
+            resetGame();
             return;
         }
 
@@ -65,7 +74,7 @@ public class WordleGUI extends JFrame {
         System.out.println(total);
     }
 
-    private void createInputField(JPanel panel) {
+    private void createInputField() {
         for(int i = 0; i <= 5; i++) {
             for (int j = 0; j <= 4; j++) {
                 JTextField inputField = new JTextField();
@@ -78,9 +87,22 @@ public class WordleGUI extends JFrame {
         }
     }
 
-    public void gameOver(boolean won) {
-//        disable all rows, register and save if win or loss, save stats
+    public void resetGame() {
+        resetInputFields();
+        currRow = 0;
+        state = new State();
     }
+
+    private void resetInputFields() {
+        for(int i = 0; i <= 5; i++) {
+            for (int j = 0; j <= 4; j++) {
+                textRows[i][j].setEditable(true);
+                textRows[i][j].setText("");
+                textRows[i][j].setBackground(Color.WHITE);
+            }
+        }
+    }
+
 
     private class TileKeyListener implements KeyListener {
         private int tileRow;
