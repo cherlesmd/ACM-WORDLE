@@ -11,34 +11,14 @@ public class State {
     public int checkCharacter(String c, int index) {
         char character = c.charAt(0);
         if(correct_word.charAt(index) == character) {
-            System.out.println(character + " green");
             char_stack[index] = true;
             return 1;
         }
         else if (contains(character) == true) {
-            System.out.println(character + " yellow");
             char_stack[index] = true;
             return 2;
         }
-        System.out.println(character + " grey");
         return 0;
-//        for(int i = 0; i < correct_word.length(); i++) {
-//            if(correct_word.charAt(i) == character) {
-//                System.out.println(character + " green");
-//                char_stack[i] = true;
-//                return 1;
-//            }
-//            else if (contains(character) == true) {
-//                System.out.println(character + " yellow");
-//                char_stack[i] = true;
-//                return 2;
-//            }
-//            else {
-//                System.out.println(character + " grey");
-//                return 0;
-//            }
-//        }
-//        return -1;
     }
 
     private boolean contains(char c) {
@@ -53,5 +33,15 @@ public class State {
         for(int i = 0; i < char_stack.length; i ++) {
             char_stack[i] = false;
         }
+    }
+
+    public void gameOver(boolean won) {
+//        register and save if win or loss, save stats
+        if(won == true) {
+            System.out.println("won");
+        } else {
+            System.out.println("lost");
+        }
+
     }
 }
