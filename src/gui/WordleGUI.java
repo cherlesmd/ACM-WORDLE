@@ -8,6 +8,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class WordleGUI extends JFrame {
+    private JMenuBar menuBar;
+    private JMenu statsMenu;
+    private JMenuItem statsItem;
+
     private JTextField[][] textRows;
     private int currRow;
     private State state;
@@ -17,6 +21,22 @@ public class WordleGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 700);
         setTitle("Tiles GUI");
+
+        // Setup menu
+        statsItem = new JMenuItem("View");
+        statsMenu = new JMenu("Stats");
+        statsMenu.add(statsItem);
+
+        statsItem.addActionListener((event) -> {
+            // get stats from state by getter since they're private
+            Statistics temp = state.getStatsObject();
+
+            // show stats
+            JOptionPane.showMessageDialog(null, "Won: " + temp.getRoundsWon() + "\nLost: " + temp.getRoundsLost());
+        });
+
+        menuBar = new JMenuBar();
+        menuBar.add(statsMenu);
 
         // Create a panel for letter tiles
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -37,6 +57,9 @@ public class WordleGUI extends JFrame {
             }
         });
         mainPanel.add(submitButton, BorderLayout.SOUTH);
+
+        // add menus to GUI
+        setJMenuBar(menuBar);
 
         // Attach the GUI to the window frame
         add(mainPanel);
@@ -102,7 +125,6 @@ public class WordleGUI extends JFrame {
             }
         }
     }
-
 
     private class TileKeyListener implements KeyListener {
         private int tileRow;
