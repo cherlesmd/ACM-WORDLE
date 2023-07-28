@@ -1,4 +1,4 @@
-package wordle;
+package wordle_cli;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package wordle;  // for VSCode package resolution.
+package wordle_cli;  // for VSCode package resolution.
 
 import java.util.Scanner;
 
