@@ -1,4 +1,3 @@
-
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -41,3 +40,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Game Files
+stats.dat
