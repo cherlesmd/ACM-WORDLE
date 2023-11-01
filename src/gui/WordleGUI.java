@@ -1,3 +1,5 @@
+package gui; // for VSCode package resolution
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,26 +8,47 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class WordleGUI extends JFrame {
+    private JMenuBar menuBar;
+    private JMenu statsMenu;
+    private JMenuItem statsItem;
+
     private JTextField[][] textRows;
     private int currRow;
     private State state;
     private JPanel panel;
 
     public WordleGUI() {
-        setTitle("Tiles GUI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 700);
+        setTitle("Tiles GUI");
 
-        // Create a panel to hold the components
+        // Setup menu
+        statsItem = new JMenuItem("View");
+        statsMenu = new JMenu("Stats");
+        statsMenu.add(statsItem);
+
+        statsItem.addActionListener((event) -> {
+            // get stats from state by getter since they're private
+            Statistics temp = state.getStatsObject();
+
+            // show stats
+            JOptionPane.showMessageDialog(null, "Won: " + temp.getRoundsWon() + "\nLost: " + temp.getRoundsLost());
+        });
+
+        menuBar = new JMenuBar();
+        menuBar.add(statsMenu);
+
+        // Create a panel for letter tiles
         JPanel mainPanel = new JPanel(new BorderLayout());
         panel = new JPanel();
         panel.setLayout(new GridLayout(6, 5));
         mainPanel.add(panel, BorderLayout.CENTER);
-        // Create the input fields
+
+        // Create the input fields for holding guess letters
         textRows = new JTextField[6][5];
         createInputField();
 
-        // Create the submit button
+        // Create the submit button for guesses
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -35,7 +58,10 @@ public class WordleGUI extends JFrame {
         });
         mainPanel.add(submitButton, BorderLayout.SOUTH);
 
-        // Add the panel to the frame
+        // add menus to GUI
+        setJMenuBar(menuBar);
+
+        // Attach the GUI to the window frame
         add(mainPanel);
         currRow = 0;
         state = new State();
@@ -65,6 +91,7 @@ public class WordleGUI extends JFrame {
             resetGame();
             return;
         }
+
         textRows[currRow+1][0].requestFocus();
         currRow++;
         System.out.println(total);
@@ -99,7 +126,6 @@ public class WordleGUI extends JFrame {
         }
     }
 
-
     private class TileKeyListener implements KeyListener {
         private int tileRow;
         private int tileColumn;
@@ -114,6 +140,8 @@ public class WordleGUI extends JFrame {
             int pos = textRows[tileRow][tileColumn].getCaretPosition();
             textRows[tileRow][tileColumn].setText(textRows[tileRow][tileColumn].getText().toUpperCase());
             textRows[tileRow][tileColumn].setCaretPosition(pos);
+
+            // Accept letter keys only for keeping input appropriate
             char c = e.getKeyChar();
             if (Character.isLetter(c)) {
                 // Move focus to the next input field

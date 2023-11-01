@@ -1,5 +1,6 @@
-import java.util.Scanner;
+package wordle_cli;  // for VSCode package resolution.
 
+import java.util.Scanner;
 
 public class DisplayWordle {
     WordleState state;

@@ -1,5 +1,5 @@
-import java.awt.*;
-import java.util.Random;
+package wordle_cli;
+
 import java.util.Scanner;
 
 public class StartWordle {
